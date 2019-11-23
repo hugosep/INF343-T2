@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option objc_class_prefix = "AUTH";
+
+service Mensajeria {
+  // One request followed by one response.
+  rpc CreateUser(newUser) returns (responseNewUser);
+  rpc MsgToUser(msgToUser) returns (responseMessage);
+}
+
+message newUser {
+  string tkn = 1;
+  string name = 2;
+  string password = 3;
+}
+
+message responseNewUser {
+    string response = 1;
+}
+
+message msgToUser {
+    string nameReceptor = 1;
+    string message = 2;
+}
+
+message responseMessage {
+    string response = 1;
+}
