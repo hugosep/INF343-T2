@@ -29,6 +29,16 @@ class MensajeriaStub(object):
         request_serializer=mensajeria__pb2.ToUser.SerializeToString,
         response_deserializer=mensajeria__pb2.ToUserResponse.FromString,
         )
+    self.ObtainList = channel.unary_stream(
+        '/Mensajeria/ObtainList',
+        request_serializer=mensajeria__pb2.requestList.SerializeToString,
+        response_deserializer=mensajeria__pb2.responseList.FromString,
+        )
+    self.ObtainAllMsg = channel.unary_stream(
+        '/Mensajeria/ObtainAllMsg',
+        request_serializer=mensajeria__pb2.requestAllMsg.SerializeToString,
+        response_deserializer=mensajeria__pb2.responseAllMsg.FromString,
+        )
 
 
 class MensajeriaServicer(object):
@@ -56,6 +66,20 @@ class MensajeriaServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def ObtainList(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ObtainAllMsg(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_MensajeriaServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -73,6 +97,16 @@ def add_MensajeriaServicer_to_server(servicer, server):
           servicer.ChangeReceptor,
           request_deserializer=mensajeria__pb2.ToUser.FromString,
           response_serializer=mensajeria__pb2.ToUserResponse.SerializeToString,
+      ),
+      'ObtainList': grpc.unary_stream_rpc_method_handler(
+          servicer.ObtainList,
+          request_deserializer=mensajeria__pb2.requestList.FromString,
+          response_serializer=mensajeria__pb2.responseList.SerializeToString,
+      ),
+      'ObtainAllMsg': grpc.unary_stream_rpc_method_handler(
+          servicer.ObtainAllMsg,
+          request_deserializer=mensajeria__pb2.requestAllMsg.FromString,
+          response_serializer=mensajeria__pb2.responseAllMsg.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

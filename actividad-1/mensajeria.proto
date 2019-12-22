@@ -2,12 +2,6 @@ syntax = "proto3";
 
 option objc_class_prefix = "AUTH";
 
-service Mensajeria {
-  // One request followed by one response.
-  rpc CreateUser(newUser) returns (responseNewUser);
-  rpc MsgToUser(msgToUser) returns (responseMessage);
-}
-
 message newUser {
   string tkn = 1;
   string name = 2;
@@ -23,6 +17,38 @@ message msgToUser {
     string message = 2;
 }
 
-message responseMessage {
+message msgFromUser {
     string response = 1;
+}
+
+message ToUser {
+    string receptor_name = 1;
+}
+
+message ToUserResponse {
+    string response = 1;
+}
+
+message requestList {
+    string request = 1;
+}
+
+message responseList {
+    string name = 1;
+}
+
+message requestAllMsg {
+    string name = 1;
+}
+
+message responseAllMsg {
+    string message = 1;
+}
+
+service Mensajeria {
+  rpc CreateUser(newUser) returns (responseNewUser) {}
+  rpc MsgToUser(stream msgToUser) returns (stream msgFromUser) {}
+  rpc ChangeReceptor(ToUser) returns (ToUserResponse) {}
+  rpc ObtainList(requestList) returns (stream responseList) {}
+  rpc ObtainAllMsg(requestAllMsg) returns (stream responseAllMsg) {}
 }

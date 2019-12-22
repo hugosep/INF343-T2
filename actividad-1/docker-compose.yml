@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+    server:
+        command: bash -c "
+            python server/server.py"
+        image: python:latest
+        volumes:
+            - ./:/server
+        container_name: server
+        networks:
+            betweenContainers:
+                ipv4_address: 172.30.0.10
+
+    client1:
+        command:  bash -c "
+            python client/client.py"
+        image: python:latest
+        container_name: client1
+        volumes:
+            - ./:/client1
+        depends_on: 
+            - server
+        networks:
+            - betweenContainers
+
+    client2:
+        command:  bash -c "
+            python client/client.py"
+        image: python:latest
+        container_name: client2
+        volumes:
+            - ./:/client2
+        depends_on:
+            - server
+        networks:
+            - betweenContainers
+
+networks:
+    betweenContainers:
+        ipam:
+            driver: default
+            config:
+            - subnet: 172.30.0.0/16
+            # gateway: 172.20.0.1
+            #iprange?
