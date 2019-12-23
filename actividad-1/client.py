@@ -66,7 +66,8 @@ def send_rpc(channel):
         flag = True
 
         while flag:
-            user_name = input("Ingresa tu nombre de usuario: ")
+            print("Ingresa tu nombre de usuario: ")
+            user_name = input()
             response = stub.CreateUser(mensajeria_pb2.newUser(name=user_name))
 
             if response.response == "ok":
@@ -74,7 +75,7 @@ def send_rpc(channel):
             else:
                 print("Nombre de usuario no disponible, ingresar otro.")
 
-        print("Tu nombres es: "+ user_name  + ", con este te identificaran los demas usuarios")
+        print("Tu nombres es: "+ user_name + ", con este te identificaran los demas usuarios")
 
         flag = True
 
@@ -85,24 +86,30 @@ def send_rpc(channel):
             print("3.- Ver todos los mensajes enviados")
             print("4.- Salir")
 
-            entrada = int(input(": "))
+            entrada = int(input(":"))
 
             if entrada == 1:
-                response = stub.ChangeReceptor(mensajeria_pb2.toUser(receptor_name=receptor_user))
-
-            elif entrada == 2:
                 chat_with = input("Chatear con: ")
-                responseList = stub.ObtainList(mensajeria_pb2.requestList(response_name=chat_with))
+                response = stub.ChangeReceptor(mensajeria_pb2.toUser(receptor_name=receptor_user))
                 print("- Mensajes - ")
 
                 for user_name in responseList:
                     print(response.user)
 
-            elif entrada == 3:
-                response = stub.ObtainAllMsg(mensajeria_pb2.requestList(response=user_name))
-
+            elif entrada == 2:
+                response = stub.ObtainList(mensajeria_pb2.requestList(request=user_name))
+                print("- Usuarios -")
+                
                 for msg in response:
                     print(msg)
+
+            elif entrada == 3:
+
+                responseAllMsg = stub.ObtainAllMsg(mensajeria_pb2.requestAllMsg(receptor_name=receptor_user))
+                print("- Mensajes - ")
+
+                for user_name in responseAllMsg:
+                    print(user_name.user)
 
             elif entrada == 4:
                 return "exit"

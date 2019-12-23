@@ -1,2 +1,2 @@
-2019-12-22 12:06:03,534 - Servidor esperando en puerto :50000
-2019-12-22 12:06:03,611 - Se ha conectado un cliente.
+2019-12-22 20:39:16,568 - Servidor esperando en puerto :50000
+2019-12-22 20:39:17,512 - Se ha conectado un cliente.

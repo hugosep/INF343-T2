@@ -60,6 +60,7 @@ class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
 class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
 
+    # crea usuario, ID: nombre
     def CreateUser(self, request, context):
 
         if not request.name in names:
@@ -67,6 +68,8 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
             return mensajeria_pb2.responseNewUser(response = "ok")
         else:
             return mensajeria_pb2.responseNewUser(response = "repeated")
+
+    # envia mensaje entre usuarios
     """def MgsToUser(self, request_iterator, context):
         prev_notes = []
         for request in request_iterator:
@@ -76,18 +79,21 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
             prev_notes.append(request)
         return mensajeria_pb2.msgFromUser()"""
 
+    # cambiar receptor de lso mensajes
     def ChangeReceptor(self, request, context):
         receptor = request.receptor
 
         if receptor in names:
             return mensajeria_pb2.toUserReponse("ok")
 
+    # envia lista de todos los usuarios
     def ObtainList(self, request, context):
         user = request.name
+        if user in names:
+            for name in names:
+                yield name
 
-        for name in names:
-            yield name
-
+    # envia todos los mensajes que ha enviado el usuario que la pide
     def ObtainAllMsgs(self, request, context):
         user = request.name
 
