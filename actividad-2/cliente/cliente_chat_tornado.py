@@ -12,18 +12,20 @@ from pika.adapters.tornado_connection import TornadoConnection
 
 
 # Define available options
-define("port", default=8889, type=int, help="run on the given port")
 define("cookie_secret", help="random cookie secret")
 define("queue_host", default="127.0.0.1", help="Host for amqp daemon")
 define("queue_user", default="guest", help="User for amqp daemon")
 define("queue_password", default="guest", help="Password for amqp daemon")
 
-PORT = 8889
 
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-channel", "--channel", dest = "channel", default = "tornado.*", help="Server name")
+parser.add_argument("-port", "--port", dest = "port", default = "8889", help="Server name")
 args = parser.parse_args()
+
+PORT = args.channel
+define("port", default=args.channel, type=int, help="run on the given port")
 
 class PikaClient(object):
 

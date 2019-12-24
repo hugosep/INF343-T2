@@ -53,7 +53,7 @@ services:
           - "8889:8889"
         volumes:
             - ./cliente:/root/cliente
-        command: bash -c "python /root/cliente/cliente_chat_tornado.py -channel client-async-01"
+        command: bash -c "python /root/cliente/cliente_chat_tornado.py -channel client-async-01 --port 8889"
 
     client-async-02:
         image: container_pika
@@ -70,10 +70,10 @@ services:
             betweenContainers:
                 ipv4_address: 172.20.0.13
         ports:
-          - "8890:8889"
+          - "8890:8890"
         volumes:
             - ./cliente:/root/cliente
-        command: bash -c "python /root/cliente/cliente_chat_tornado.py -channel client-async-02"
+        command: bash -c "python /root/cliente/cliente_chat_tornado.py -channel client-async-02 --port 8890"
              
 networks:
     betweenContainers:
