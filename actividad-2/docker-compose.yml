@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+    servidor-rabbitmq:
+        image: rabbitmq:latest
+        hostname: servidor-rabbitmq
+        container_name: servidor-rabbitmq
+        networks:
+            betweenContainers:
+                ipv4_address: 172.20.0.10
+        ports:
+          - "15672:15672"
+          - "5672:5672"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://172.20.0.10:15672"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+    servidor-async:
+        image: container_pika
+        hostname: servidor-async
+        container_name: servidor-async
+        restart: on-failure
+        depends_on:
+            - servidor-rabbitmq
+        links: 
+            - servidor-rabbitmq
+        networks:
+            betweenContainers:
+                ipv4_address: 172.20.0.11
+        ports:
+          - "8888:8888"
+        volumes:
+            - ./servidor:/root/servidor
+        command: bash -c "python /root/servidor/server_chat_tornado.py client-async-01 client-async-02"
+
+    client-async-01:
+        image: container_pika
+        stdin_open: true
+        tty: true
+        hostname: client-async-01
+        container_name: client-async-01
+        restart: on-failure
+        depends_on:
+            - servidor-rabbitmq
+        links: 
+            - servidor-rabbitmq
+        networks:
+            betweenContainers:
+                ipv4_address: 172.20.0.12
+        ports:
+          - "8889:8889"
+        volumes:
+            - ./cliente:/root/cliente
+        command: bash -c "python /root/cliente/cliente_chat_tornado.py -channel client-async-01"
+
+    client-async-02:
+        image: container_pika
+        stdin_open: true
+        tty: true
+        hostname: client-async-02
+        container_name: client-async-02
+        restart: on-failure
+        depends_on:
+            - servidor-rabbitmq
+        links: 
+            - servidor-rabbitmq
+        networks:
+            betweenContainers:
+                ipv4_address: 172.20.0.13
+        ports:
+          - "8890:8889"
+        volumes:
+            - ./cliente:/root/cliente
+        command: bash -c "python /root/cliente/cliente_chat_tornado.py -channel client-async-02"
+             
+networks:
+    betweenContainers:
+        ipam:
+            driver: default
+            config:
+            - subnet: 172.20.0.0/16
+            # gateway: 172.20.0.1
+            #iprange?
