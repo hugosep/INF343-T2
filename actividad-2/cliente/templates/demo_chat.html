@@ -25,17 +25,22 @@ function log(msg){
 
 function ws_init(url) {
 
-	log("connecting to" + url + "...");
-	ws = new WebSocket(url);
-	ws.onopen = function(){	
-			log("Connection established");
-		};
-	ws.onmessage = function(msg){
-			log("Message Received:  '" + msg.data + "'" );
-		};
-	ws.onclose = function(){
-			log("Connection Closed");
-		}
+	if(!url.includes("xxx")){
+		log("connecting to " + url + "...");
+		ws = new WebSocket(url);
+		ws.onopen = function(){	
+				log("Connection established");
+			};
+		ws.onmessage = function(msg){
+				log("Message Received:  '" + msg.data + "'" );
+			};
+		ws.onclose = function(){
+				log("Connection Closed");
+			}
+	}else{
+		log("Change de the port, your are using the XXXX." );
+	}
+	
 
 }
 

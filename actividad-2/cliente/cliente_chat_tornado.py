@@ -24,8 +24,8 @@ parser.add_argument("-channel", "--channel", dest = "channel", default = "tornad
 parser.add_argument("-port", "--port", dest = "port", default = "8889", help="Server name")
 args = parser.parse_args()
 
-PORT = args.channel
-define("port", default=args.channel, type=int, help="run on the given port")
+PORT = int(args.port)
+define("port", default=PORT, type=int, help="run on the given port")
 
 class PikaClient(object):
 

@@ -47,6 +47,8 @@ class PikaClient(object):
         #Webscoket object.
         self.websocket = None
 
+        self.channels = sys.argv[1:]
+
     def connect(self):
 
         if self.connecting:
@@ -98,12 +100,15 @@ class PikaClient(object):
     def on_queue_declared(self, frame):
 
         print('PikaClient: Queue Declared, Binding Queue')
-        channels = sys.argv[1:]
-        channels+=["tornado.*"]
-        for c_id in channels:
+        for c_id in self.channels:
             self.channel.queue_bind(exchange='tornado',
                                     queue=self.queue_name,
                                     routing_key=c_id,
+                                    callback=self.on_queue_bound)
+        # Canal de broadcast "tornado.*"                        
+        self.channel.queue_bind(exchange='tornado',
+                                    queue=self.queue_name,
+                                    routing_key="tornado.*",
                                     callback=self.on_queue_bound)
 
     def on_queue_bound(self, frame):
@@ -112,11 +117,26 @@ class PikaClient(object):
                                    queue=self.queue_name)
 
     def on_pika_message(self, channel, basic_deliver, properties, body):
-        print('PikaCient: Received message from %s: %s' %  (basic_deliver.consumer_tag,body))
+        body=body.decode('UTF-8')
+        if body[0]=='+': #comando del tipo servidor
+            comand=body[1:]
 
+            self.websocket.write_message('Server comand: '+str(comand))
 
-        #Send the Cosumed message via Websocket to browser.
-        self.websocket.write_message(body)
+            if  comand=='all':
+                msg='Channels/clients availables: ' + str(self.channels)
+                self.channel.basic_publish(exchange='tornado',
+                                    routing_key='tornado.*',
+                                    body=msg,
+                                    properties=properties)
+                self.websocket.write_message('Server comand response: '+msg)
+
+            else:
+                self.websocket.write_message('Server comand not found :c')
+        else:
+            print('PikaCient: Received message from %s: %s' %  (basic_deliver.consumer_tag,body))
+            #Send the Cosumed message via Websocket to browser.
+            self.websocket.write_message(body)
 
     def on_basic_cancel(self, frame):
         print('PikaClient: Basic Cancel Ok')

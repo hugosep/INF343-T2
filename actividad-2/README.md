@@ -28,16 +28,24 @@ Este deployment ejecutara 4 containers:
 Para ingresar al chat desde el servidor a.k.a. ``servidor-async``, se debe ir a la URL ``localhost:8888``. Una vez dentro de la página, se debe conectar al socket de comunicación, clickeando en el botón ``connect``. La conexión se iniciará con los mensajes ``connecting tows://localhost:8888/ws_channel...`` y ``Connection established``. Tras esto, se podran mandar mensajes a los canales.
 
 Sintaxis de comando habilitados para ``servidor-async``:
-* aaaaaa
+* `{*canal:mensaje}`: Envia el string `mensaje` al canal `canal`.
+* `{+all}`: Solicitada al servidor un lista de los canales/clientes disponibles, el servidor responde por el canal de broadcast.
 
 Al igual que el servidor, para ingresar a un cliente del tipo ``client-async-xx`` se debe ir a la URL ``localhost:XXXX`` con `XXXX` el puerto del cliente. Por defecto, el primer cliente tiene el puerto ``8889``, el segundo cliente ``8890``, el tercer cliente ``8891`` y así sucesivamente. Una vez dentro de la página, se debe conectar al socket de comunicación, clickeando en el botón ``connect``. La conexión se iniciará con los mensajes ``connecting tows://localhost:XXXX/ws_channel...`` y ``Connection established``. Tras esto, se podran mandar mensajes a los canales.
 
 Sintaxis de comando habilitados para ``client-async-xx``:
-* aaaaaa
+* `{*canal:mensaje}`: Envia el string `mensaje` al canal `canal`.
+* `{**mensaje}`: Envia el string `mensaje` a todos los clientes por el canal de broadcast.
+* `{+all}`: Solicitada al servidor un lista de los canales/clientes disponibles, el servidor responde por el canal de broadcast.
 
-## Salida
+### Salida
 
 Para salir solo basta con presionar CTRL + C. Para mayor seguridad usar el siguiente comando, una vez presionado CTRL + C:
 ```{r, engine='bash', count_lines}
 docker build -t container_pika .
 ```
+
+### Tutorial
+#### Uso general
+
+#### Registrar Nuevos Clientes
