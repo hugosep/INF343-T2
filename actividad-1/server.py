@@ -32,9 +32,14 @@ logging.basicConfig(level = logging.INFO, filename = 'log.txt', filemode = 'w', 
 _LISTEN_ADDRESS_TEMPLATE = 'localhost:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
 
-ports = list()
+ports = dict()
 names = list()
+# tendrá como llave el nombre del usuario al que le llega un mensaje y como value
+# otro diccionario con la llave el nombre de quien lo envía y value el mensaje
 allMsgs = dict()
+chats = dict()
+port = 0
+user_name = ""
 
 class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
@@ -60,41 +65,57 @@ class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
 class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
 
-    # crea usuario, ID: nombre
-    def CreateUser(self, request, context):
+    # avisa si hay mensajes para un determinado usuario, y lo envía en caso de haberlo
+    def WaitingMsg(self, request, context):
 
-        if not request.name in names:
-            names.append(request.name)
-            return mensajeria_pb2.responseNewUser(response = "ok")
+        # hay mensajes
+        if allMsgs[request.user_name] != []:
+            user, msg = allMsgs[request.user_name][-1].items()
+            return mensajeria_pb2.responseWaiting(message=user + ":" + msg)
+
+        return mensajeria_pb2.responseWaiting(message="no msg")
+
+    # crea usuario
+    def CreateUser(self, request, context):
+        user_name = request.name
+
+        if not user_name in names:
+            names.append(user_name)
+            allMsgs[user_name] = list()
+            return mensajeria_pb2.responseNewUser(response="ok")
         else:
-            return mensajeria_pb2.responseNewUser(response = "repeated")
+            return mensajeria_pb2.responseNewUser(response="repeated")
 
     # envia mensaje entre usuarios
-    """def MgsToUser(self, request_iterator, context):
-        prev_notes = []
-        for request in request_iterator:
-            for response in prev_notes:
-                if response.location == new_note.location:
-                    yield prev_note
-            prev_notes.append(request)
-        return mensajeria_pb2.msgFromUser()"""
+    def MgsToUser(self, request_iterator, context):
+        
+        for msgFromUser in request_iterator:
+            msg = msgFromUser.response
+            new_msg = mensajeria_pb2.MsgToUser(send(msg))
+            yield new_msg
 
-    # cambiar receptor de lso mensajes
+    # cambiar receptor de los mensajes
     def ChangeReceptor(self, request, context):
         receptor = request.receptor
-
+        emisor = request.receptor
+        
         if receptor in names:
-            return mensajeria_pb2.toUserReponse("ok")
+            chats[emisor] = receptor
+            return mensajeria_pb2.ToUserResponse("ok")
+        else:
+            return mensajeria_pb2.ToUserResponse("problem")
 
     # envia lista de todos los usuarios
     def ObtainList(self, request, context):
-        user = request.name
-        if user in names:
+        user_name = request.request
+        
+        if user_name in names:
             for name in names:
+                name = mensajeria_pb2.responseList(name=name)
                 yield name
 
     # envia todos los mensajes que ha enviado el usuario que la pide
-    def ObtainAllMsgs(self, request, context):
+    def ObtainAllMsg(self, request, context):
         user = request.name
 
         for msg in allMsgs[user]:
@@ -103,8 +124,11 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
 @contextlib.contextmanager
 def run_server(port):
     # Bind interceptor to server
+    print("en run_server")
+
     server = grpc.server(
         futures.ThreadPoolExecutor(),
+        #handlers=[hello_handler],
         interceptors=(SignatureValidationInterceptor(),))
 
     mensajeria_pb2_grpc.add_MensajeriaServicer_to_server(Mensajeria(), server)
@@ -118,27 +142,33 @@ def run_server(port):
     # Pass down credentials
     port = server.add_secure_port(_LISTEN_ADDRESS_TEMPLATE % port,
                                   server_credentials)
-
     server.start()
 
     try:
-        ports.append(port)
-        logging.info("Se ha conectado un cliente.")
         yield server, port
-
 
     finally:
         server.stop(0)
 
+"""class hello_handler(grpc.GenericRpcHandler):
+    
+    def __init__(self):
+        print("hello, new client")
+        pass"""
 
 def main():
     DEFAULT_PORT = 50000
     logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
     print('Servidor esperando en puerto : ', DEFAULT_PORT)
+    cant_clientes = 0
 
     with run_server(DEFAULT_PORT) as (server, port):
+        print("en with")
+        cant_clientes += 1
+        logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
+        print("Se ha conectado un cliente, ID " + str(cant_clientes))
+
         server.wait_for_termination()
-
-
+        print(user_name)
 if __name__ == '__main__':
     main()

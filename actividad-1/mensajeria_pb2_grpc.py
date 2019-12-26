@@ -39,6 +39,11 @@ class MensajeriaStub(object):
         request_serializer=mensajeria__pb2.requestAllMsg.SerializeToString,
         response_deserializer=mensajeria__pb2.responseAllMsg.FromString,
         )
+    self.WaitingMsg = channel.unary_unary(
+        '/Mensajeria/WaitingMsg',
+        request_serializer=mensajeria__pb2.requestWaiting.SerializeToString,
+        response_deserializer=mensajeria__pb2.responseWaiting.FromString,
+        )
 
 
 class MensajeriaServicer(object):
@@ -80,6 +85,13 @@ class MensajeriaServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def WaitingMsg(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_MensajeriaServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -107,6 +119,11 @@ def add_MensajeriaServicer_to_server(servicer, server):
           servicer.ObtainAllMsg,
           request_deserializer=mensajeria__pb2.requestAllMsg.FromString,
           response_serializer=mensajeria__pb2.responseAllMsg.SerializeToString,
+      ),
+      'WaitingMsg': grpc.unary_unary_rpc_method_handler(
+          servicer.WaitingMsg,
+          request_deserializer=mensajeria__pb2.requestWaiting.FromString,
+          response_serializer=mensajeria__pb2.responseWaiting.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

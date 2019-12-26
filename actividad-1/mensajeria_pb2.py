@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=_b('\242\002\004AUTH'),
-  serialized_pb=_b('\n\x10mensajeria.proto\"6\n\x07newUser\x12\x0b\n\x03tkn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"#\n\x0fresponseNewUser\x12\x10\n\x08response\x18\x01 \x01(\t\"2\n\tmsgToUser\x12\x14\n\x0cnameReceptor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1f\n\x0bmsgFromUser\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1f\n\x06ToUser\x12\x15\n\rreceptor_name\x18\x01 \x01(\t\"\"\n\x0eToUserResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1e\n\x0brequestList\x12\x0f\n\x07request\x18\x01 \x01(\t\"\x1c\n\x0cresponseList\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\rrequestAllMsg\x12\x0c\n\x04name\x18\x01 \x01(\t\"!\n\x0eresponseAllMsg\x12\x0f\n\x07message\x18\x01 \x01(\t2\xf7\x01\n\nMensajeria\x12*\n\nCreateUser\x12\x08.newUser\x1a\x10.responseNewUser\"\x00\x12+\n\tMsgToUser\x12\n.msgToUser\x1a\x0c.msgFromUser\"\x00(\x01\x30\x01\x12,\n\x0e\x43hangeReceptor\x12\x07.ToUser\x1a\x0f.ToUserResponse\"\x00\x12-\n\nObtainList\x12\x0c.requestList\x1a\r.responseList\"\x00\x30\x01\x12\x33\n\x0cObtainAllMsg\x12\x0e.requestAllMsg\x1a\x0f.responseAllMsg\"\x00\x30\x01\x42\x07\xa2\x02\x04\x41UTHb\x06proto3')
+  serialized_pb=_b('\n\x10mensajeria.proto\"6\n\x07newUser\x12\x0b\n\x03tkn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"#\n\x0fresponseNewUser\x12\x10\n\x08response\x18\x01 \x01(\t\"2\n\tmsgToUser\x12\x14\n\x0cnameReceptor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1f\n\x0bmsgFromUser\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1f\n\x06ToUser\x12\x15\n\rreceptor_name\x18\x01 \x01(\t\"\"\n\x0eToUserResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1e\n\x0brequestList\x12\x0f\n\x07request\x18\x01 \x01(\t\" \n\x0cresponseList\x12\x10\n\x08nameList\x18\x01 \x01(\t\"\x1d\n\rrequestAllMsg\x12\x0c\n\x04name\x18\x01 \x01(\t\"!\n\x0eresponseAllMsg\x12\x0f\n\x07message\x18\x01 \x01(\t\"!\n\x0erequestWaiting\x12\x0f\n\x07\x62oolean\x18\x01 \x01(\t\"\"\n\x0fresponseWaiting\x12\x0f\n\x07\x62oolean\x18\x01 \x01(\t2\xaa\x02\n\nMensajeria\x12*\n\nCreateUser\x12\x08.newUser\x1a\x10.responseNewUser\"\x00\x12+\n\tMsgToUser\x12\n.msgToUser\x1a\x0c.msgFromUser\"\x00(\x01\x30\x01\x12,\n\x0e\x43hangeReceptor\x12\x07.ToUser\x1a\x0f.ToUserResponse\"\x00\x12-\n\nObtainList\x12\x0c.requestList\x1a\r.responseList\"\x00\x30\x01\x12\x33\n\x0cObtainAllMsg\x12\x0e.requestAllMsg\x1a\x0f.responseAllMsg\"\x00\x30\x01\x12\x31\n\nWaitingMsg\x12\x0f.requestWaiting\x1a\x10.responseWaiting\"\x00\x42\x07\xa2\x02\x04\x41UTHb\x06proto3')
 )
 
 
@@ -272,7 +272,7 @@ _RESPONSELIST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='responseList.name', index=0,
+      name='nameList', full_name='responseList.nameList', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -291,7 +291,7 @@ _RESPONSELIST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=299,
-  serialized_end=327,
+  serialized_end=331,
 )
 
 
@@ -321,8 +321,8 @@ _REQUESTALLMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=329,
-  serialized_end=358,
+  serialized_start=333,
+  serialized_end=362,
 )
 
 
@@ -352,8 +352,70 @@ _RESPONSEALLMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=360,
-  serialized_end=393,
+  serialized_start=364,
+  serialized_end=397,
+)
+
+
+_REQUESTWAITING = _descriptor.Descriptor(
+  name='requestWaiting',
+  full_name='requestWaiting',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='boolean', full_name='requestWaiting.boolean', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=399,
+  serialized_end=432,
+)
+
+
+_RESPONSEWAITING = _descriptor.Descriptor(
+  name='responseWaiting',
+  full_name='responseWaiting',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='boolean', full_name='responseWaiting.boolean', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=434,
+  serialized_end=468,
 )
 
 DESCRIPTOR.message_types_by_name['newUser'] = _NEWUSER
@@ -366,6 +428,8 @@ DESCRIPTOR.message_types_by_name['requestList'] = _REQUESTLIST
 DESCRIPTOR.message_types_by_name['responseList'] = _RESPONSELIST
 DESCRIPTOR.message_types_by_name['requestAllMsg'] = _REQUESTALLMSG
 DESCRIPTOR.message_types_by_name['responseAllMsg'] = _RESPONSEALLMSG
+DESCRIPTOR.message_types_by_name['requestWaiting'] = _REQUESTWAITING
+DESCRIPTOR.message_types_by_name['responseWaiting'] = _RESPONSEWAITING
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 newUser = _reflection.GeneratedProtocolMessageType('newUser', (_message.Message,), {
@@ -438,6 +502,20 @@ responseAllMsg = _reflection.GeneratedProtocolMessageType('responseAllMsg', (_me
   })
 _sym_db.RegisterMessage(responseAllMsg)
 
+requestWaiting = _reflection.GeneratedProtocolMessageType('requestWaiting', (_message.Message,), {
+  'DESCRIPTOR' : _REQUESTWAITING,
+  '__module__' : 'mensajeria_pb2'
+  # @@protoc_insertion_point(class_scope:requestWaiting)
+  })
+_sym_db.RegisterMessage(requestWaiting)
+
+responseWaiting = _reflection.GeneratedProtocolMessageType('responseWaiting', (_message.Message,), {
+  'DESCRIPTOR' : _RESPONSEWAITING,
+  '__module__' : 'mensajeria_pb2'
+  # @@protoc_insertion_point(class_scope:responseWaiting)
+  })
+_sym_db.RegisterMessage(responseWaiting)
+
 
 DESCRIPTOR._options = None
 
@@ -447,8 +525,8 @@ _MENSAJERIA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=396,
-  serialized_end=643,
+  serialized_start=471,
+  serialized_end=769,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateUser',
@@ -493,6 +571,15 @@ _MENSAJERIA = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_REQUESTALLMSG,
     output_type=_RESPONSEALLMSG,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='WaitingMsg',
+    full_name='Mensajeria.WaitingMsg',
+    index=5,
+    containing_service=None,
+    input_type=_REQUESTWAITING,
+    output_type=_RESPONSEWAITING,
     serialized_options=None,
   ),
 ])
