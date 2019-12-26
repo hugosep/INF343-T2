@@ -62,7 +62,7 @@ docker-compose down
 
 ### Tutorial
 #### Uso general
-[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T1](https://youtu.be/gzUZSdAUPdw/0.jpg)](https://youtu.be/gzUZSdAUPdw "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T1")
+[![](http://img.youtube.com/vi/gzUZSdAUPdw/1.jpg)](http://www.youtube.com/watch?v=gzUZSdAUPdw "https://www.youtube.com/watch?v=gzUZSdAUPdw&")
 
 #### Registrar Nuevos Clientes
 [![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T2](https://youtu.be/QsxBCTbZxcs/0.jpg)](https://youtu.be/QsxBCTbZxcs "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T2")
