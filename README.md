@@ -57,10 +57,12 @@ Sintaxis de comando habilitados para ``client-async-xx``:
 
 Para salir solo basta con presionar CTRL + C. Para mayor seguridad usar el siguiente comando, una vez presionado CTRL + C:
 ```{r, engine='bash', count_lines}
-docker build -t container_pika .
+docker-compose down
 ```
 
 ### Tutorial
 #### Uso general
+[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T1](https://youtu.be/gzUZSdAUPdw/0.jpg)](https://youtu.be/gzUZSdAUPdw "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T1")
 
 #### Registrar Nuevos Clientes
+[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T2](https://youtu.be/QsxBCTbZxcs/0.jpg)](https://youtu.be/QsxBCTbZxcs "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T2")
