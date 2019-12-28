@@ -17,6 +17,7 @@ _LOGGER.setLevel(logging.INFO)
 _SERVER_ADDR_TEMPLATE = 'localhost:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
 user_name = ""
+historial = list()
 
 class AuthGateway(grpc.AuthMetadataPlugin):
 
@@ -56,85 +57,103 @@ def create_client_channel(addr):
     channel = grpc.secure_channel(addr, composite_credentials)
     yield channel
 
-# consulta siempre si hay mensajes para él
+# consulta siempre si hay mensajes para el
 def listener(stub):
 
     while True:
-        requestWaiting = stub.WaitingMsg(mensajeria_pb2.requestWaiting(user_name=user_name))
-        if requestWaiting != "no msg":
-            print(requestWaiting.waitingMessage)
+        call_future = stub.WaitingMsg.future(mensajeria_pb2.requestUser(user_name=user_name))
+        waitingMessage = call_future.result()
+
+        if waitingMessage.message != "no msg":
+            print(waitingMessage.message)
 
 def send_rpc(channel):
 
     try:
         stub = mensajeria_pb2_grpc.MensajeriaStub(channel)
-
-        # se consulta permanentemente
-        threading.Thread(target=listener, args=[stub], daemon=True).start()
         
         flag = True
 
         while flag:
             user_name = input("Ingresa tu nombre de usuario: ")
             response = stub.CreateUser(mensajeria_pb2.newUser(name=user_name))
-
+            #threading.Thread(target=listener, args=[stub], daemon=True).start()
+            
             if response.response == "ok":
                 flag = False
             else:
                 print("Nombre de usuario no disponible, ingresar otro.")
 
         print("Tu nombre es: " + user_name)
-        print("Con este te identificarán los demás usuarios.")
+        print("Con este te identificaran los demas usuarios.\n")
 
         flag = True
 
         while flag:
-            print("Elige una opción:")
-            print("1.- Chatear con un usuario")
+            print("Elige una opcion:")
+            print("1.- Enviar mensaje a usuario")
             print("2.- Ver lista de usuarios")
             print("3.- Ver todos los mensajes enviados")
-            print("4.- Salir")
+            print("4.- Revisar buzon (mensajes que te han enviado)")
+            print("5.- Salir")
 
             entrada = int(input(":"))
 
             if entrada == 1:
-                chat_with = input("Chatear con: ")
-                responseList = stub.ChangeReceptor(mensajeria_pb2.ToUser(receptor_name=chat_with))
-                print("- Mensajes - ")
+                
+                receptor = input("Enviar mensaje a: ")
+                while True:
+                    message = input("(q para salir):")
 
-                for response in responseList:
-                    print(response.user)
+                    if message == "q":
+                        break
+
+                    responseCreationMsg = stub.MsgToUser(mensajeria_pb2.msgToUser(
+                        user_name=user_name,
+                        receptor=receptor,
+                        message=message
+                        ))
+
+                    if responseCreationMsg.response != "ok":
+                        print("Problema al enviar mensaje al servidor.")
 
             elif entrada == 2:
                 request = mensajeria_pb2.requestList(request=user_name)
 
-                print("- Usuarios -")
+                print("-- Usuarios --")
                 for user in stub.ObtainList(request):
-                    print(user.name)
+                    print(user.nameList)
+                print("")
 
             elif entrada == 3:
-                user = mensajeria_pb2.requestAllMsg(name=user_name)
+                user = mensajeria_pb2.requestAllMsg(user_name=user_name)
 
-                print("- Mensajes - ")
-                for user_name in stub.ObtainAllMsg(user):
-                    print(user_name.message)
+                print("-- Mensajes --")
+                for responseAllMsg in stub.ObtainAllMsg(user):
+                    if responseAllMsg.receptor != "-1":
+                        print("[" + responseAllMsg.receptor + "]: " + responseAllMsg.message)
+                    else:
+                        print("No hay mas mensajes")
+                        break
+                print("")
 
             elif entrada == 4:
+                print("-- Buzon de mensajes --")
+                request = mensajeria_pb2.requestMsg(user_name=user_name)
+
+                for response in stub.ViewMsg(request):
+                    print("[" + response.emisor + "] : " + response.message)
+                print("")
+
+            elif entrada == 5:
                 return "exit"
 
             else:
-                print("Opción no válida.")
+                print("Opcion no valida.")
 
     except grpc.RpcError as rpc_error:
         print('Error recibido: %s', rpc_error)
-
-        print("Más corto: %s", rpc_error.debug_error_string["details"])
         return rpc_error
-
-    else:
-        print('Mensaje recibido: %s', response)
-        return response
-
 
 def main():
     DEFAULT_PORT = 50000

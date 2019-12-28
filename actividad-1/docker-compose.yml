@@ -9,6 +9,8 @@ services:
         volumes:
             - ./:/server
         container_name: server
+        ports:
+            - "50000:50000"
         networks:
             betweenContainers:
                 ipv4_address: 172.20.0.10

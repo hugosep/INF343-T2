@@ -13,21 +13,22 @@ message responseNewUser {
 }
 
 message msgToUser {
-    string nameReceptor = 1;
-    string message = 2;
+    string user_name = 1;
+    string receptor = 2;
+    string message = 3;
 }
 
-message msgFromUser {
+message responseCreationMsg {
     string response = 1;
 }
 
-message ToUser {
+/*message ToUser {
     string receptor_name = 1;
-}
+}*/
 
-message ToUserResponse {
+/*message ToUserResponse {
     string response = 1;
-}
+}*/
 
 message requestList {
     string request = 1;
@@ -38,26 +39,38 @@ message responseList {
 }
 
 message requestAllMsg {
-    string name = 1;
+    string user_name = 1;
 }
 
 message responseAllMsg {
-    string message = 1;
+    string receptor = 1;
+    string message = 2;
 }
 
 message requestUser {
     string user_name = 1;
 }
 
-message messageWaiting {
-    string message = 1;
+message waitingMessage {
+    string emisor = 1;
+    string message = 2;
+}
+
+message requestMsg {
+    string user_name = 1;
+}
+
+message responseMsg {
+    string emisor = 1;
+    string message = 2;
 }
 
 service Mensajeria {
   rpc CreateUser(newUser) returns (responseNewUser) {}
-  rpc MsgToUser(stream msgToUser) returns (stream msgFromUser) {}
-  rpc ChangeReceptor(ToUser) returns (ToUserResponse) {}
+  rpc MsgToUser(msgToUser) returns (responseCreationMsg) {}
+  //rpc ChangeReceptor(ToUser) returns (ToUserResponse) {}
   rpc ObtainList(requestList) returns (stream responseList) {}
   rpc ObtainAllMsg(requestAllMsg) returns (stream responseAllMsg) {}
-  rpc WaitingMsg(requestUser) returns (stream waitingMessage) {}
+  rpc WaitingMsg(requestUser) returns (waitingMessage) {}
+  rpc ViewMsg(requestMsg) returns (stream responseMsg) {}
 }

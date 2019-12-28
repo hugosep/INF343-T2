@@ -21,6 +21,7 @@ import argparse
 import contextlib
 import logging
 from concurrent import futures
+import datetime as dt
 
 import grpc
 import mensajeria_pb2
@@ -34,12 +35,16 @@ _SIGNATURE_HEADER_KEY = 'x-signature'
 
 ports = dict()
 names = list()
-# tendrá como llave el nombre del usuario al que le llega un mensaje y como value
-# otro diccionario con la llave el nombre de quien lo envía y value el mensaje
+# tendra como llave el nombre del usuario al que le llega un mensaje y como value
+# otro diccionario con la llave el nombre de quien lo envia y value el mensaje
 allMsgs = dict()
 chats = dict()
 port = 0
 user_name = ""
+cant_clientes = 0
+# tendra como llave el usuario emisor, donde el value seraun diccionario con el
+# receptor como llave y value el mensaje
+reverseAllMsgs = dict()
 
 class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
@@ -47,9 +52,9 @@ class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
         def abort(ignored_request, context):
             context.abort(grpc.StatusCode.UNAUTHENTICATED, 'Firma invalida')
-
+        logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
         self._abortion = grpc.unary_unary_rpc_method_handler(abort)
-
+    
     def intercept_service(self, continuation, handler_call_details):
         # Example HandlerCallDetails object:
         #     _HandlerCallDetails(
@@ -65,15 +70,16 @@ class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
 class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
 
-    # avisa si hay mensajes para un determinado usuario, y lo envía en caso de haberlo
+    # avisa si hay mensajes para un determinado usuario, y lo envia en caso de haberlo
     def WaitingMsg(self, request, context):
 
         # hay mensajes
         if allMsgs[request.user_name] != []:
             user, msg = allMsgs[request.user_name][-1].items()
-            return mensajeria_pb2.responseWaiting(message=user + ":" + msg)
+            allMsgs[request.user_name].pop(-1)
+            return mensajeria_pb2.waitingMessage(message=user + ": " + msg)
 
-        return mensajeria_pb2.responseWaiting(message="no msg")
+        return mensajeria_pb2.waitingMessage(message="no msg")
 
     # crea usuario
     def CreateUser(self, request, context):
@@ -82,28 +88,17 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
         if not user_name in names:
             names.append(user_name)
             allMsgs[user_name] = list()
+            reverseAllMsgs[user_name] = list()
             return mensajeria_pb2.responseNewUser(response="ok")
         else:
             return mensajeria_pb2.responseNewUser(response="repeated")
 
     # envia mensaje entre usuarios
-    def MgsToUser(self, request_iterator, context):
-        
-        for msgFromUser in request_iterator:
-            msg = msgFromUser.response
-            new_msg = mensajeria_pb2.MsgToUser(send(msg))
-            yield new_msg
-
-    # cambiar receptor de los mensajes
-    def ChangeReceptor(self, request, context):
-        receptor = request.receptor
-        emisor = request.receptor
-        
-        if receptor in names:
-            chats[emisor] = receptor
-            return mensajeria_pb2.ToUserResponse("ok")
-        else:
-            return mensajeria_pb2.ToUserResponse("problem")
+    def MsgToUser(self, request, context):
+        logging.info("Mensaje: [" + request.user_name + " a " + request.receptor + ", " + request.message)
+        allMsgs[request.receptor].append(dict({request.user_name : request.message}))
+        reverseAllMsgs[request.user_name].append(dict({request.receptor : request.message}))
+        return mensajeria_pb2.responseCreationMsg(response="ok")
 
     # envia lista de todos los usuarios
     def ObtainList(self, request, context):
@@ -111,15 +106,39 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
         
         if user_name in names:
             for name in names:
-                name = mensajeria_pb2.responseList(name=name)
+                name = mensajeria_pb2.responseList(nameList=name)
                 yield name
+
+    def ViewMsg(self, request, context):
+        diccionarios = allMsgs[request.user_name]
+        for msg in diccionarios:
+            emisor = list(msg.keys())[0]
+            message = list(msg.values())[0]
+
+            yield mensajeria_pb2.responseMsg(
+                emisor=emisor,
+                message=message
+                )
 
     # envia todos los mensajes que ha enviado el usuario que la pide
     def ObtainAllMsg(self, request, context):
-        user = request.name
+        user_name = request.user_name
+        if reverseAllMsgs[user_name]:
 
-        for msg in allMsgs[user]:
-            yield msg
+            msgs = reverseAllMsgs[user_name]
+            
+            for msg in msgs:
+                receptor = list(msg.keys())[0]
+                message = list(msg.values())[0]
+                yield mensajeria_pb2.responseAllMsg(
+                    receptor=receptor,
+                    message=message
+                    )
+        else:
+            return mensajeria_pb2.responseAllMsg(
+                    receptor="-1",
+                    message="-1"
+                    )
 
 @contextlib.contextmanager
 def run_server(port):
@@ -150,23 +169,13 @@ def run_server(port):
     finally:
         server.stop(0)
 
-"""class hello_handler(grpc.GenericRpcHandler):
-    
-    def __init__(self):
-        print("hello, new client")
-        pass"""
-
 def main():
     DEFAULT_PORT = 50000
     logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
-    print('Servidor esperando en puerto : ', DEFAULT_PORT)
-    cant_clientes = 0
 
     with run_server(DEFAULT_PORT) as (server, port):
-        print("en with")
         cant_clientes += 1
         logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
-        print("Se ha conectado un cliente, ID " + str(cant_clientes))
 
         server.wait_for_termination()
         print(user_name)

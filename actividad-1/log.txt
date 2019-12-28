@@ -1,21 +1,2 @@
-2019-12-25 20:54:51,397 - Servidor esperando en puerto :50000
-2019-12-25 20:54:51,525 - Se ha conectado un cliente, ID 1
-2019-12-25 20:54:55,741 - Exception servicing handler: service() missing 1 required positional argument: 'handler_call_details'
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.7/site-packages/grpc/_server.py", line 730, in _handle_call
-    interceptor_pipeline)
-  File "/usr/local/lib/python3.7/site-packages/grpc/_server.py", line 682, in _find_method_handler
-    handler_call_details)
-  File "/usr/local/lib/python3.7/site-packages/grpc/_interceptor.py", line 39, in execute
-    return self._intercept_at(thunk, 0, context)
-  File "/usr/local/lib/python3.7/site-packages/grpc/_interceptor.py", line 34, in _intercept_at
-    return interceptor.intercept_service(thunk, context)
-  File "server.py", line 59, in intercept_service
-    return continuation(handler_call_details)
-  File "/usr/local/lib/python3.7/site-packages/grpc/_interceptor.py", line 28, in <lambda>
-    return lambda context: self._intercept_at(thunk, index, context)
-  File "/usr/local/lib/python3.7/site-packages/grpc/_interceptor.py", line 36, in _intercept_at
-    return thunk(context)
-  File "/usr/local/lib/python3.7/site-packages/grpc/_server.py", line 671, in query_handlers
-    method_handler = generic_handler.service(handler_call_details)
-TypeError: service() missing 1 required positional argument: 'handler_call_details'
+2019-12-27 20:11:43,464 - Servidor esperando en puerto :50000
+2019-12-27 20:11:43,477 - Se ha conectado un cliente, ID 1

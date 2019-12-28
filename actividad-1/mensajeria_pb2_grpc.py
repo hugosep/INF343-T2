@@ -19,15 +19,10 @@ class MensajeriaStub(object):
         request_serializer=mensajeria__pb2.newUser.SerializeToString,
         response_deserializer=mensajeria__pb2.responseNewUser.FromString,
         )
-    self.MsgToUser = channel.stream_stream(
+    self.MsgToUser = channel.unary_unary(
         '/Mensajeria/MsgToUser',
         request_serializer=mensajeria__pb2.msgToUser.SerializeToString,
-        response_deserializer=mensajeria__pb2.msgFromUser.FromString,
-        )
-    self.ChangeReceptor = channel.unary_unary(
-        '/Mensajeria/ChangeReceptor',
-        request_serializer=mensajeria__pb2.ToUser.SerializeToString,
-        response_deserializer=mensajeria__pb2.ToUserResponse.FromString,
+        response_deserializer=mensajeria__pb2.responseCreationMsg.FromString,
         )
     self.ObtainList = channel.unary_stream(
         '/Mensajeria/ObtainList',
@@ -41,8 +36,13 @@ class MensajeriaStub(object):
         )
     self.WaitingMsg = channel.unary_unary(
         '/Mensajeria/WaitingMsg',
-        request_serializer=mensajeria__pb2.requestWaiting.SerializeToString,
-        response_deserializer=mensajeria__pb2.responseWaiting.FromString,
+        request_serializer=mensajeria__pb2.requestUser.SerializeToString,
+        response_deserializer=mensajeria__pb2.waitingMessage.FromString,
+        )
+    self.ViewMsg = channel.unary_stream(
+        '/Mensajeria/ViewMsg',
+        request_serializer=mensajeria__pb2.requestMsg.SerializeToString,
+        response_deserializer=mensajeria__pb2.responseMsg.FromString,
         )
 
 
@@ -57,14 +57,7 @@ class MensajeriaServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def MsgToUser(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def ChangeReceptor(self, request, context):
+  def MsgToUser(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -72,8 +65,8 @@ class MensajeriaServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def ObtainList(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
+    """rpc ChangeReceptor(ToUser) returns (ToUserResponse) {}
+    """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -92,6 +85,13 @@ class MensajeriaServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def ViewMsg(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_MensajeriaServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -100,15 +100,10 @@ def add_MensajeriaServicer_to_server(servicer, server):
           request_deserializer=mensajeria__pb2.newUser.FromString,
           response_serializer=mensajeria__pb2.responseNewUser.SerializeToString,
       ),
-      'MsgToUser': grpc.stream_stream_rpc_method_handler(
+      'MsgToUser': grpc.unary_unary_rpc_method_handler(
           servicer.MsgToUser,
           request_deserializer=mensajeria__pb2.msgToUser.FromString,
-          response_serializer=mensajeria__pb2.msgFromUser.SerializeToString,
-      ),
-      'ChangeReceptor': grpc.unary_unary_rpc_method_handler(
-          servicer.ChangeReceptor,
-          request_deserializer=mensajeria__pb2.ToUser.FromString,
-          response_serializer=mensajeria__pb2.ToUserResponse.SerializeToString,
+          response_serializer=mensajeria__pb2.responseCreationMsg.SerializeToString,
       ),
       'ObtainList': grpc.unary_stream_rpc_method_handler(
           servicer.ObtainList,
@@ -122,8 +117,13 @@ def add_MensajeriaServicer_to_server(servicer, server):
       ),
       'WaitingMsg': grpc.unary_unary_rpc_method_handler(
           servicer.WaitingMsg,
-          request_deserializer=mensajeria__pb2.requestWaiting.FromString,
-          response_serializer=mensajeria__pb2.responseWaiting.SerializeToString,
+          request_deserializer=mensajeria__pb2.requestUser.FromString,
+          response_serializer=mensajeria__pb2.waitingMessage.SerializeToString,
+      ),
+      'ViewMsg': grpc.unary_stream_rpc_method_handler(
+          servicer.ViewMsg,
+          request_deserializer=mensajeria__pb2.requestMsg.FromString,
+          response_serializer=mensajeria__pb2.responseMsg.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
