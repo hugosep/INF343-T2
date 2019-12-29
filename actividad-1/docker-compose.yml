@@ -3,10 +3,8 @@ version: '3'
 services:
 
     server:
-        command: bash -c "
-            python3 -m pip install grpcio grpcio-tools &&
-            python3 server/server.py"
-        image: python:latest
+        command: bash -c "python3 server/server.py"
+        image: hugosep/grpc-python:latest
         volumes:
             - ./:/server
         container_name: server
@@ -17,10 +15,8 @@ services:
                 ipv4_address: 172.20.0.10
 
     client1:
-        command:  bash -c "
-            python3 -m pip install grpcio grpcio-tools &&
-            python3 client1/client.py"
-        image: python:latest
+        command:  bash -c "python3 client1/client.py"
+        image: hugosep/grpc-python:latest
         container_name: client1
         volumes:
             - ./:/client1
@@ -32,10 +28,8 @@ services:
         tty: true
 
     client2:
-        command:  bash -c "
-            python3 -m pip install grpcio grpcio-tools &&
-            python3 client2/client.py"
-        image: python:latest
+        command:  bash -c "python3 client2/client.py"
+        image: hugosep/grpc-python:latest
         container_name: client2
         volumes:
             - ./:/client2
