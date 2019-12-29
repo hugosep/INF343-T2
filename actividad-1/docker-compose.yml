@@ -4,20 +4,22 @@ services:
 
     server:
         command: bash -c "
-            python server/server.py"
+            python3 -m pip install grpcio grpcio-tools &&
+            python3 server/server.py"
         image: python:latest
         volumes:
             - ./:/server
         container_name: server
         ports:
-            - "50000:50000"
+            - "5000:5000"
         networks:
             betweenContainers:
                 ipv4_address: 172.20.0.10
 
     client1:
         command:  bash -c "
-            python client/client.py"
+            python3 -m pip install grpcio grpcio-tools &&
+            python3 client1/client.py"
         image: python:latest
         container_name: client1
         volumes:
@@ -26,10 +28,13 @@ services:
             - server
         networks:
             - betweenContainers
+        stdin_open: true
+        tty: true
 
     client2:
         command:  bash -c "
-            python client/client.py"
+            python3 -m pip install grpcio grpcio-tools &&
+            python3 client2/client.py"
         image: python:latest
         container_name: client2
         volumes:
@@ -38,6 +43,8 @@ services:
             - server
         networks:
             - betweenContainers
+        stdin_open: true
+        tty: true
 
 networks:
     betweenContainers:

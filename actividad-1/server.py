@@ -30,7 +30,7 @@ import _credentials
 
 logging.basicConfig(level = logging.INFO, filename = 'log.txt', filemode = 'w', format = '%(asctime)s - %(message)s')
 
-_LISTEN_ADDRESS_TEMPLATE = 'localhost:%d'
+_LISTEN_ADDRESS_TEMPLATE = '0.0.0.0:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
 
 ports = dict()
@@ -170,14 +170,15 @@ def run_server(port):
         server.stop(0)
 
 def main():
-    DEFAULT_PORT = 50000
+    DEFAULT_PORT = 5000
     logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
-
+    cant_clientes = 0
     with run_server(DEFAULT_PORT) as (server, port):
         cant_clientes += 1
         logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
 
         server.wait_for_termination()
         print(user_name)
+
 if __name__ == '__main__':
     main()

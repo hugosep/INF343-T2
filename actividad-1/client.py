@@ -14,7 +14,7 @@ import threading
 _LOGGER = logging.getLogger(__name__)
 _LOGGER.setLevel(logging.INFO)
 
-_SERVER_ADDR_TEMPLATE = 'localhost:%d'
+_SERVER_ADDR_TEMPLATE = '172.20.0.10:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
 user_name = ""
 historial = list()
@@ -156,7 +156,7 @@ def send_rpc(channel):
         return rpc_error
 
 def main():
-    DEFAULT_PORT = 50000
+    DEFAULT_PORT = 5000
 
     with create_client_channel(_SERVER_ADDR_TEMPLATE % DEFAULT_PORT) as channel:
         retorno_rpc = send_rpc(channel)
