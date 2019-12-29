@@ -158,7 +158,8 @@ def send_rpc(channel):
 def main():
     DEFAULT_PORT = 5000
 
-    with create_client_channel(_SERVER_ADDR_TEMPLATE % DEFAULT_PORT) as channel:
+    """with create_client_channel(_SERVER_ADDR_TEMPLATE % DEFAULT_PORT) as channel:"""
+    with grpc.insecure_channel('172.20.0.10:5000') as channel:
         retorno_rpc = send_rpc(channel)
 
         if retorno_rpc == "exit":

@@ -1,2 +1,0 @@
-2019-12-27 20:11:43,464 - Servidor esperando en puerto :50000
-2019-12-27 20:11:43,477 - Se ha conectado un cliente, ID 1

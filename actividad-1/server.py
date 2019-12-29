@@ -30,7 +30,7 @@ import _credentials
 
 logging.basicConfig(level = logging.INFO, filename = 'log.txt', filemode = 'w', format = '%(asctime)s - %(message)s')
 
-_LISTEN_ADDRESS_TEMPLATE = '0.0.0.0:%d'
+_LISTEN_ADDRESS_TEMPLATE = '[::]:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
 
 ports = dict()
@@ -146,21 +146,23 @@ def run_server(port):
     print("en run_server")
 
     server = grpc.server(
-        futures.ThreadPoolExecutor(),
+        futures.ThreadPoolExecutor())
         #handlers=[hello_handler],
-        interceptors=(SignatureValidationInterceptor(),))
+        #interceptors=(SignatureValidationInterceptor(),))
 
     mensajeria_pb2_grpc.add_MensajeriaServicer_to_server(Mensajeria(), server)
 
     # Loading credentials
-    server_credentials = grpc.ssl_server_credentials(((
+    """server_credentials = grpc.ssl_server_credentials(((
         _credentials.SERVER_CERTIFICATE_KEY,
         _credentials.SERVER_CERTIFICATE,
     ),))
 
     # Pass down credentials
     port = server.add_secure_port(_LISTEN_ADDRESS_TEMPLATE % port,
-                                  server_credentials)
+                                  server_credentials)"""
+
+    server.add_insecure_port(_LISTEN_ADDRESS_TEMPLATE % port)
     server.start()
 
     try:
@@ -173,6 +175,7 @@ def main():
     DEFAULT_PORT = 5000
     logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
     cant_clientes = 0
+    
     with run_server(DEFAULT_PORT) as (server, port):
         cant_clientes += 1
         logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
