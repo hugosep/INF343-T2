@@ -2,16 +2,7 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-"""Server of the Python example of customizing authentication mechanism."""
+# You may obtain a copy of the Lic
 
 from __future__ import absolute_import
 from __future__ import division
@@ -28,17 +19,20 @@ import mensajeria_pb2
 import mensajeria_pb2_grpc
 import _credentials
 
+# creacion log.txt
 logging.basicConfig(level = logging.INFO, filename = 'log.txt', filemode = 'w', format = '%(asctime)s - %(message)s')
 
+# strings para definir servidor
 _LISTEN_ADDRESS_TEMPLATE = '[::]:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
+DEFAULT_PORT = 5000
 
-ports = dict()
+# nombres
 names = list()
+
 # tendra como llave el nombre del usuario al que le llega un mensaje y como value
 # otro diccionario con la llave el nombre de quien lo envia y value el mensaje
 allMsgs = dict()
-chats = dict()
 port = 0
 user_name = ""
 cant_clientes = 0
@@ -46,7 +40,7 @@ cant_clientes = 0
 # receptor como llave y value el mensaje
 reverseAllMsgs = dict()
 
-class SignatureValidationInterceptor(grpc.ServerInterceptor):
+"""class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
     def __init__(self):
 
@@ -65,7 +59,7 @@ class SignatureValidationInterceptor(grpc.ServerInterceptor):
         if expected_metadata in handler_call_details.invocation_metadata:
             return continuation(handler_call_details)
         else:
-            return self._abortion
+            return self._abortion"""
 
 
 class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
@@ -73,12 +67,12 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
     # avisa si hay mensajes para un determinado usuario, y lo envia en caso de haberlo
     def WaitingMsg(self, request, context):
 
-        # hay mensajes
+        # si hay mensajes
         if allMsgs[request.user_name] != []:
             user, msg = allMsgs[request.user_name][-1].items()
             allMsgs[request.user_name].pop(-1)
             return mensajeria_pb2.waitingMessage(message=user + ": " + msg)
-
+        # sino
         return mensajeria_pb2.waitingMessage(message="no msg")
 
     # crea usuario
@@ -109,6 +103,7 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
                 name = mensajeria_pb2.responseList(nameList=name)
                 yield name
 
+    # manda mensajes que se le han enviado
     def ViewMsg(self, request, context):
         diccionarios = allMsgs[request.user_name]
         for msg in diccionarios:
@@ -142,8 +137,6 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
 
 @contextlib.contextmanager
 def run_server(port):
-    # Bind interceptor to server
-    print("en run_server")
 
     server = grpc.server(
         futures.ThreadPoolExecutor())
@@ -163,6 +156,7 @@ def run_server(port):
                                   server_credentials)"""
 
     server.add_insecure_port(_LISTEN_ADDRESS_TEMPLATE % port)
+    logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
     server.start()
 
     try:
@@ -172,16 +166,10 @@ def run_server(port):
         server.stop(0)
 
 def main():
-    DEFAULT_PORT = 5000
-    logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
-    cant_clientes = 0
     
     with run_server(DEFAULT_PORT) as (server, port):
-        cant_clientes += 1
-        logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
-
+        logging.info("Se ha conectado un cliente.")
         server.wait_for_termination()
-        print(user_name)
 
 if __name__ == '__main__':
     main()

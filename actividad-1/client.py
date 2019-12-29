@@ -3,17 +3,14 @@ from __future__ import division
 from __future__ import print_function
 
 import contextlib
-import logging
 
 import grpc
 import mensajeria_pb2
 import mensajeria_pb2_grpc
-import _credentials
+# import _credentials
 import threading
-
-_LOGGER = logging.getLogger(__name__)
-_LOGGER.setLevel(logging.INFO)
-
+DEFAULT_IP_SERVER = "172.20.0.10"
+DEFAULT_PORT = 5000
 _SERVER_ADDR_TEMPLATE = '172.20.0.10:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
 user_name = ""
@@ -40,7 +37,7 @@ class AuthGateway(grpc.AuthMetadataPlugin):
         callback(((_SIGNATURE_HEADER_KEY, signature),), None)
 
 
-@contextlib.contextmanager
+"""@contextlib.contextmanager
 def create_client_channel(addr):
     call_credentials = grpc.metadata_call_credentials(
         AuthGateway(), name='actividad-1 gateway')
@@ -55,7 +52,7 @@ def create_client_channel(addr):
     )
     
     channel = grpc.secure_channel(addr, composite_credentials)
-    yield channel
+    yield channel"""
 
 # consulta siempre si hay mensajes para el
 def listener(stub):
@@ -70,14 +67,15 @@ def listener(stub):
 def send_rpc(channel):
 
     try:
+        # creacion de stub
         stub = mensajeria_pb2_grpc.MensajeriaStub(channel)
         
         flag = True
 
+        # nombre de usuario (unico)
         while flag:
             user_name = input("Ingresa tu nombre de usuario: ")
             response = stub.CreateUser(mensajeria_pb2.newUser(name=user_name))
-            #threading.Thread(target=listener, args=[stub], daemon=True).start()
             
             if response.response == "ok":
                 flag = False
@@ -89,6 +87,7 @@ def send_rpc(channel):
 
         flag = True
 
+        # menu
         while flag:
             print("Elige una opcion:")
             print("1.- Enviar mensaje a usuario")
@@ -100,10 +99,11 @@ def send_rpc(channel):
             entrada = int(input(":"))
 
             if entrada == 1:
-                
                 receptor = input("Enviar mensaje a: ")
+                print("(escribir \"q\" para salir)")
+
                 while True:
-                    message = input("(q para salir):")
+                    message = input(":")
 
                     if message == "q":
                         break
@@ -156,10 +156,8 @@ def send_rpc(channel):
         return rpc_error
 
 def main():
-    DEFAULT_PORT = 5000
-
     """with create_client_channel(_SERVER_ADDR_TEMPLATE % DEFAULT_PORT) as channel:"""
-    with grpc.insecure_channel('172.20.0.10:5000') as channel:
+    with grpc.insecure_channel(DEFAULT_IP_SERVER + ":" + str(DEFAULT_PORT)) as channel:
         retorno_rpc = send_rpc(channel)
 
         if retorno_rpc == "exit":
