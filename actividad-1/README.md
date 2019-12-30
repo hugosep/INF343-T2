@@ -12,8 +12,10 @@ Para iniciar los servicios en los containers se deben ocupar:
 *´´ sudo docker-compose up server´´
 
 Se necesita levantar manualmente a los clientes:
- *´´ sudo docker-compose run client1 ´´
- *´´ sudo docker-compose run client ´´
+```{r, engine='bash', count_lines}
+* sudo docker-compose run client1
+* sudo docker-compose run client2
+```
  
 ### Consideraciones
 * IP del servidor es ´´ 172.20.0.10 ´´.
