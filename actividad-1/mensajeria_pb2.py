@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=_b('\242\002\004AUTH'),
-  serialized_pb=_b('\n\x10mensajeria.proto\"6\n\x07newUser\x12\x0b\n\x03tkn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"#\n\x0fresponseNewUser\x12\x10\n\x08response\x18\x01 \x01(\t\"2\n\tmsgToUser\x12\x14\n\x0cnameReceptor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1f\n\x0bmsgFromUser\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1f\n\x06ToUser\x12\x15\n\rreceptor_name\x18\x01 \x01(\t\"\"\n\x0eToUserResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1e\n\x0brequestList\x12\x0f\n\x07request\x18\x01 \x01(\t\"\x1c\n\x0cresponseList\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\rrequestAllMsg\x12\x0c\n\x04name\x18\x01 \x01(\t\"!\n\x0eresponseAllMsg\x12\x0f\n\x07message\x18\x01 \x01(\t2\xf7\x01\n\nMensajeria\x12*\n\nCreateUser\x12\x08.newUser\x1a\x10.responseNewUser\"\x00\x12+\n\tMsgToUser\x12\n.msgToUser\x1a\x0c.msgFromUser\"\x00(\x01\x30\x01\x12,\n\x0e\x43hangeReceptor\x12\x07.ToUser\x1a\x0f.ToUserResponse\"\x00\x12-\n\nObtainList\x12\x0c.requestList\x1a\r.responseList\"\x00\x30\x01\x12\x33\n\x0cObtainAllMsg\x12\x0e.requestAllMsg\x1a\x0f.responseAllMsg\"\x00\x30\x01\x42\x07\xa2\x02\x04\x41UTHb\x06proto3')
+  serialized_pb=_b('\n\x10mensajeria.proto\"\x17\n\x07newUser\x12\x0c\n\x04name\x18\x01 \x01(\t\"#\n\x0fresponseNewUser\x12\x10\n\x08response\x18\x01 \x01(\t\"A\n\tmsgToUser\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x10\n\x08receptor\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\"\'\n\x13responseCreationMsg\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1e\n\x0brequestList\x12\x0f\n\x07request\x18\x01 \x01(\t\" \n\x0cresponseList\x12\x10\n\x08nameList\x18\x01 \x01(\t\"\"\n\rrequestAllMsg\x12\x11\n\tuser_name\x18\x01 \x01(\t\"F\n\x0eresponseAllMsg\x12\x10\n\x08receptor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\ttimestamp\x18\x03 \x01(\x02\" \n\x0brequestUser\x12\x11\n\tuser_name\x18\x01 \x01(\t\"1\n\x0ewaitingMessage\x12\x0e\n\x06\x65misor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1f\n\nrequestMsg\x12\x11\n\tuser_name\x18\x01 \x01(\t\"A\n\x0bresponseMsg\x12\x0e\n\x06\x65misor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\ttimestamp\x18\x03 \x01(\x02\x32\xa6\x02\n\nMensajeria\x12*\n\nCreateUser\x12\x08.newUser\x1a\x10.responseNewUser\"\x00\x12/\n\tMsgToUser\x12\n.msgToUser\x1a\x14.responseCreationMsg\"\x00\x12-\n\nObtainList\x12\x0c.requestList\x1a\r.responseList\"\x00\x30\x01\x12\x33\n\x0cObtainAllMsg\x12\x0e.requestAllMsg\x1a\x0f.responseAllMsg\"\x00\x30\x01\x12-\n\nWaitingMsg\x12\x0c.requestUser\x1a\x0f.waitingMessage\"\x00\x12(\n\x07ViewMsg\x12\x0b.requestMsg\x1a\x0c.responseMsg\"\x00\x30\x01\x42\x07\xa2\x02\x04\x41UTHb\x06proto3')
 )
 
 
@@ -34,22 +34,8 @@ _NEWUSER = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='tkn', full_name='newUser.tkn', index=0,
+      name='name', full_name='newUser.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='name', full_name='newUser.name', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='password', full_name='newUser.password', index=2,
-      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -67,7 +53,7 @@ _NEWUSER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=20,
-  serialized_end=74,
+  serialized_end=43,
 )
 
 
@@ -97,8 +83,8 @@ _RESPONSENEWUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=76,
-  serialized_end=111,
+  serialized_start=45,
+  serialized_end=80,
 )
 
 
@@ -110,19 +96,26 @@ _MSGTOUSER = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='nameReceptor', full_name='msgToUser.nameReceptor', index=0,
+      name='user_name', full_name='msgToUser.user_name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='message', full_name='msgToUser.message', index=1,
+      name='receptor', full_name='msgToUser.receptor', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='msgToUser.message', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -135,20 +128,20 @@ _MSGTOUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=113,
-  serialized_end=163,
+  serialized_start=82,
+  serialized_end=147,
 )
 
 
-_MSGFROMUSER = _descriptor.Descriptor(
-  name='msgFromUser',
-  full_name='msgFromUser',
+_RESPONSECREATIONMSG = _descriptor.Descriptor(
+  name='responseCreationMsg',
+  full_name='responseCreationMsg',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response', full_name='msgFromUser.response', index=0,
+      name='response', full_name='responseCreationMsg.response', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -166,70 +159,8 @@ _MSGFROMUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=165,
-  serialized_end=196,
-)
-
-
-_TOUSER = _descriptor.Descriptor(
-  name='ToUser',
-  full_name='ToUser',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='receptor_name', full_name='ToUser.receptor_name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=198,
-  serialized_end=229,
-)
-
-
-_TOUSERRESPONSE = _descriptor.Descriptor(
-  name='ToUserResponse',
-  full_name='ToUserResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='response', full_name='ToUserResponse.response', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=231,
-  serialized_end=265,
+  serialized_start=149,
+  serialized_end=188,
 )
 
 
@@ -259,8 +190,8 @@ _REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=267,
-  serialized_end=297,
+  serialized_start=190,
+  serialized_end=220,
 )
 
 
@@ -272,7 +203,7 @@ _RESPONSELIST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='responseList.name', index=0,
+      name='nameList', full_name='responseList.nameList', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -290,8 +221,8 @@ _RESPONSELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=299,
-  serialized_end=327,
+  serialized_start=222,
+  serialized_end=254,
 )
 
 
@@ -303,7 +234,7 @@ _REQUESTALLMSG = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='name', full_name='requestAllMsg.name', index=0,
+      name='user_name', full_name='requestAllMsg.user_name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -321,8 +252,8 @@ _REQUESTALLMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=329,
-  serialized_end=358,
+  serialized_start=256,
+  serialized_end=290,
 )
 
 
@@ -334,7 +265,52 @@ _RESPONSEALLMSG = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='message', full_name='responseAllMsg.message', index=0,
+      name='receptor', full_name='responseAllMsg.receptor', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='responseAllMsg.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='timestamp', full_name='responseAllMsg.timestamp', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=292,
+  serialized_end=362,
+)
+
+
+_REQUESTUSER = _descriptor.Descriptor(
+  name='requestUser',
+  full_name='requestUser',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user_name', full_name='requestUser.user_name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -352,20 +328,136 @@ _RESPONSEALLMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=360,
-  serialized_end=393,
+  serialized_start=364,
+  serialized_end=396,
+)
+
+
+_WAITINGMESSAGE = _descriptor.Descriptor(
+  name='waitingMessage',
+  full_name='waitingMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='emisor', full_name='waitingMessage.emisor', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='waitingMessage.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=398,
+  serialized_end=447,
+)
+
+
+_REQUESTMSG = _descriptor.Descriptor(
+  name='requestMsg',
+  full_name='requestMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user_name', full_name='requestMsg.user_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=449,
+  serialized_end=480,
+)
+
+
+_RESPONSEMSG = _descriptor.Descriptor(
+  name='responseMsg',
+  full_name='responseMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='emisor', full_name='responseMsg.emisor', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='responseMsg.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='timestamp', full_name='responseMsg.timestamp', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=482,
+  serialized_end=547,
 )
 
 DESCRIPTOR.message_types_by_name['newUser'] = _NEWUSER
 DESCRIPTOR.message_types_by_name['responseNewUser'] = _RESPONSENEWUSER
 DESCRIPTOR.message_types_by_name['msgToUser'] = _MSGTOUSER
-DESCRIPTOR.message_types_by_name['msgFromUser'] = _MSGFROMUSER
-DESCRIPTOR.message_types_by_name['ToUser'] = _TOUSER
-DESCRIPTOR.message_types_by_name['ToUserResponse'] = _TOUSERRESPONSE
+DESCRIPTOR.message_types_by_name['responseCreationMsg'] = _RESPONSECREATIONMSG
 DESCRIPTOR.message_types_by_name['requestList'] = _REQUESTLIST
 DESCRIPTOR.message_types_by_name['responseList'] = _RESPONSELIST
 DESCRIPTOR.message_types_by_name['requestAllMsg'] = _REQUESTALLMSG
 DESCRIPTOR.message_types_by_name['responseAllMsg'] = _RESPONSEALLMSG
+DESCRIPTOR.message_types_by_name['requestUser'] = _REQUESTUSER
+DESCRIPTOR.message_types_by_name['waitingMessage'] = _WAITINGMESSAGE
+DESCRIPTOR.message_types_by_name['requestMsg'] = _REQUESTMSG
+DESCRIPTOR.message_types_by_name['responseMsg'] = _RESPONSEMSG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 newUser = _reflection.GeneratedProtocolMessageType('newUser', (_message.Message,), {
@@ -389,26 +481,12 @@ msgToUser = _reflection.GeneratedProtocolMessageType('msgToUser', (_message.Mess
   })
 _sym_db.RegisterMessage(msgToUser)
 
-msgFromUser = _reflection.GeneratedProtocolMessageType('msgFromUser', (_message.Message,), {
-  'DESCRIPTOR' : _MSGFROMUSER,
+responseCreationMsg = _reflection.GeneratedProtocolMessageType('responseCreationMsg', (_message.Message,), {
+  'DESCRIPTOR' : _RESPONSECREATIONMSG,
   '__module__' : 'mensajeria_pb2'
-  # @@protoc_insertion_point(class_scope:msgFromUser)
+  # @@protoc_insertion_point(class_scope:responseCreationMsg)
   })
-_sym_db.RegisterMessage(msgFromUser)
-
-ToUser = _reflection.GeneratedProtocolMessageType('ToUser', (_message.Message,), {
-  'DESCRIPTOR' : _TOUSER,
-  '__module__' : 'mensajeria_pb2'
-  # @@protoc_insertion_point(class_scope:ToUser)
-  })
-_sym_db.RegisterMessage(ToUser)
-
-ToUserResponse = _reflection.GeneratedProtocolMessageType('ToUserResponse', (_message.Message,), {
-  'DESCRIPTOR' : _TOUSERRESPONSE,
-  '__module__' : 'mensajeria_pb2'
-  # @@protoc_insertion_point(class_scope:ToUserResponse)
-  })
-_sym_db.RegisterMessage(ToUserResponse)
+_sym_db.RegisterMessage(responseCreationMsg)
 
 requestList = _reflection.GeneratedProtocolMessageType('requestList', (_message.Message,), {
   'DESCRIPTOR' : _REQUESTLIST,
@@ -438,6 +516,34 @@ responseAllMsg = _reflection.GeneratedProtocolMessageType('responseAllMsg', (_me
   })
 _sym_db.RegisterMessage(responseAllMsg)
 
+requestUser = _reflection.GeneratedProtocolMessageType('requestUser', (_message.Message,), {
+  'DESCRIPTOR' : _REQUESTUSER,
+  '__module__' : 'mensajeria_pb2'
+  # @@protoc_insertion_point(class_scope:requestUser)
+  })
+_sym_db.RegisterMessage(requestUser)
+
+waitingMessage = _reflection.GeneratedProtocolMessageType('waitingMessage', (_message.Message,), {
+  'DESCRIPTOR' : _WAITINGMESSAGE,
+  '__module__' : 'mensajeria_pb2'
+  # @@protoc_insertion_point(class_scope:waitingMessage)
+  })
+_sym_db.RegisterMessage(waitingMessage)
+
+requestMsg = _reflection.GeneratedProtocolMessageType('requestMsg', (_message.Message,), {
+  'DESCRIPTOR' : _REQUESTMSG,
+  '__module__' : 'mensajeria_pb2'
+  # @@protoc_insertion_point(class_scope:requestMsg)
+  })
+_sym_db.RegisterMessage(requestMsg)
+
+responseMsg = _reflection.GeneratedProtocolMessageType('responseMsg', (_message.Message,), {
+  'DESCRIPTOR' : _RESPONSEMSG,
+  '__module__' : 'mensajeria_pb2'
+  # @@protoc_insertion_point(class_scope:responseMsg)
+  })
+_sym_db.RegisterMessage(responseMsg)
+
 
 DESCRIPTOR._options = None
 
@@ -447,8 +553,8 @@ _MENSAJERIA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=396,
-  serialized_end=643,
+  serialized_start=550,
+  serialized_end=844,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateUser',
@@ -465,22 +571,13 @@ _MENSAJERIA = _descriptor.ServiceDescriptor(
     index=1,
     containing_service=None,
     input_type=_MSGTOUSER,
-    output_type=_MSGFROMUSER,
-    serialized_options=None,
-  ),
-  _descriptor.MethodDescriptor(
-    name='ChangeReceptor',
-    full_name='Mensajeria.ChangeReceptor',
-    index=2,
-    containing_service=None,
-    input_type=_TOUSER,
-    output_type=_TOUSERRESPONSE,
+    output_type=_RESPONSECREATIONMSG,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='ObtainList',
     full_name='Mensajeria.ObtainList',
-    index=3,
+    index=2,
     containing_service=None,
     input_type=_REQUESTLIST,
     output_type=_RESPONSELIST,
@@ -489,10 +586,28 @@ _MENSAJERIA = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ObtainAllMsg',
     full_name='Mensajeria.ObtainAllMsg',
-    index=4,
+    index=3,
     containing_service=None,
     input_type=_REQUESTALLMSG,
     output_type=_RESPONSEALLMSG,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='WaitingMsg',
+    full_name='Mensajeria.WaitingMsg',
+    index=4,
+    containing_service=None,
+    input_type=_REQUESTUSER,
+    output_type=_WAITINGMESSAGE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ViewMsg',
+    full_name='Mensajeria.ViewMsg',
+    index=5,
+    containing_service=None,
+    input_type=_REQUESTMSG,
+    output_type=_RESPONSEMSG,
     serialized_options=None,
   ),
 ])
