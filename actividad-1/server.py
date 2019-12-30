@@ -33,12 +33,21 @@ names = list()
 # tendra como llave el nombre del usuario al que le llega un mensaje y como value
 # otro diccionario con la llave el nombre de quien lo envia y value el mensaje
 allMsgs = dict()
+id_user = dict()
+id_msg = dict()
 port = 0
 user_name = ""
-cant_clientes = 0
+global cant_clientes = 0
+global cant_mensajes = 0
 # tendra como llave el usuario emisor, donde el value seraun diccionario con el
 # receptor como llave y value el mensaje
 reverseAllMsgs = dict()
+
+
+class NewUser(grpc.ServerInterceptor):
+    def intercept_service(self, continuation, handler_call_details):
+        logging.info("Se ha conectado un cliente, ID " + str(cant_clientes))
+        return continuation(handler_call_details)
 
 """class SignatureValidationInterceptor(grpc.ServerInterceptor):
 
@@ -83,13 +92,18 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
             names.append(user_name)
             allMsgs[user_name] = list()
             reverseAllMsgs[user_name] = list()
+            cant_clientes += 1
+            id_user[cant_clientes] = user_name
+            logging.info("Nuevo usuario: nombre, " + user_name + ", ID: " + str(cant_clientes))
             return mensajeria_pb2.responseNewUser(response="ok")
         else:
             return mensajeria_pb2.responseNewUser(response="repeated")
 
     # envia mensaje entre usuarios
     def MsgToUser(self, request, context):
-        logging.info("Mensaje: [" + request.user_name + " a " + request.receptor + ", " + request.message)
+        cant_mensajes += 1
+        id_msg[cant_mensajes] = request.message
+        logging.info("[" + request.user_name + "] a [" + request.receptor + "], mensaje:" + request.message + ", ID: " + str(cant_mensajes))
         allMsgs[request.receptor].append(dict({request.user_name : request.message}))
         reverseAllMsgs[request.user_name].append(dict({request.receptor : request.message}))
         return mensajeria_pb2.responseCreationMsg(response="ok")
@@ -140,6 +154,7 @@ def run_server(port):
 
     server = grpc.server(
         futures.ThreadPoolExecutor())
+        #interceptors=(NewUser(),))
         #handlers=[hello_handler],
         #interceptors=(SignatureValidationInterceptor(),))
 
@@ -156,6 +171,7 @@ def run_server(port):
                                   server_credentials)"""
 
     server.add_insecure_port(_LISTEN_ADDRESS_TEMPLATE % port)
+    print('Servidor esperando en puerto :%d', DEFAULT_PORT)
     logging.info('Servidor esperando en puerto :%d', DEFAULT_PORT)
     server.start()
 
@@ -168,7 +184,6 @@ def run_server(port):
 def main():
     
     with run_server(DEFAULT_PORT) as (server, port):
-        logging.info("Se ha conectado un cliente.")
         server.wait_for_termination()
 
 if __name__ == '__main__':
