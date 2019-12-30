@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=_b('\242\002\004AUTH'),
-  serialized_pb=_b('\n\x10mensajeria.proto\"6\n\x07newUser\x12\x0b\n\x03tkn\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"#\n\x0fresponseNewUser\x12\x10\n\x08response\x18\x01 \x01(\t\"A\n\tmsgToUser\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x10\n\x08receptor\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\"\'\n\x13responseCreationMsg\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1e\n\x0brequestList\x12\x0f\n\x07request\x18\x01 \x01(\t\" \n\x0cresponseList\x12\x10\n\x08nameList\x18\x01 \x01(\t\"\"\n\rrequestAllMsg\x12\x11\n\tuser_name\x18\x01 \x01(\t\"3\n\x0eresponseAllMsg\x12\x10\n\x08receptor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\" \n\x0brequestUser\x12\x11\n\tuser_name\x18\x01 \x01(\t\"1\n\x0ewaitingMessage\x12\x0e\n\x06\x65misor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1f\n\nrequestMsg\x12\x11\n\tuser_name\x18\x01 \x01(\t\".\n\x0bresponseMsg\x12\x0e\n\x06\x65misor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t2\xa6\x02\n\nMensajeria\x12*\n\nCreateUser\x12\x08.newUser\x1a\x10.responseNewUser\"\x00\x12/\n\tMsgToUser\x12\n.msgToUser\x1a\x14.responseCreationMsg\"\x00\x12-\n\nObtainList\x12\x0c.requestList\x1a\r.responseList\"\x00\x30\x01\x12\x33\n\x0cObtainAllMsg\x12\x0e.requestAllMsg\x1a\x0f.responseAllMsg\"\x00\x30\x01\x12-\n\nWaitingMsg\x12\x0c.requestUser\x1a\x0f.waitingMessage\"\x00\x12(\n\x07ViewMsg\x12\x0b.requestMsg\x1a\x0c.responseMsg\"\x00\x30\x01\x42\x07\xa2\x02\x04\x41UTHb\x06proto3')
+  serialized_pb=_b('\n\x10mensajeria.proto\"\x17\n\x07newUser\x12\x0c\n\x04name\x18\x01 \x01(\t\"#\n\x0fresponseNewUser\x12\x10\n\x08response\x18\x01 \x01(\t\"A\n\tmsgToUser\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x10\n\x08receptor\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\"\'\n\x13responseCreationMsg\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1e\n\x0brequestList\x12\x0f\n\x07request\x18\x01 \x01(\t\" \n\x0cresponseList\x12\x10\n\x08nameList\x18\x01 \x01(\t\"\"\n\rrequestAllMsg\x12\x11\n\tuser_name\x18\x01 \x01(\t\"F\n\x0eresponseAllMsg\x12\x10\n\x08receptor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\ttimestamp\x18\x03 \x01(\x02\" \n\x0brequestUser\x12\x11\n\tuser_name\x18\x01 \x01(\t\"1\n\x0ewaitingMessage\x12\x0e\n\x06\x65misor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1f\n\nrequestMsg\x12\x11\n\tuser_name\x18\x01 \x01(\t\"A\n\x0bresponseMsg\x12\x0e\n\x06\x65misor\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\ttimestamp\x18\x03 \x01(\x02\x32\xa6\x02\n\nMensajeria\x12*\n\nCreateUser\x12\x08.newUser\x1a\x10.responseNewUser\"\x00\x12/\n\tMsgToUser\x12\n.msgToUser\x1a\x14.responseCreationMsg\"\x00\x12-\n\nObtainList\x12\x0c.requestList\x1a\r.responseList\"\x00\x30\x01\x12\x33\n\x0cObtainAllMsg\x12\x0e.requestAllMsg\x1a\x0f.responseAllMsg\"\x00\x30\x01\x12-\n\nWaitingMsg\x12\x0c.requestUser\x1a\x0f.waitingMessage\"\x00\x12(\n\x07ViewMsg\x12\x0b.requestMsg\x1a\x0c.responseMsg\"\x00\x30\x01\x42\x07\xa2\x02\x04\x41UTHb\x06proto3')
 )
 
 
@@ -34,22 +34,8 @@ _NEWUSER = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='tkn', full_name='newUser.tkn', index=0,
+      name='name', full_name='newUser.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='name', full_name='newUser.name', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='password', full_name='newUser.password', index=2,
-      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -67,7 +53,7 @@ _NEWUSER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=20,
-  serialized_end=74,
+  serialized_end=43,
 )
 
 
@@ -97,8 +83,8 @@ _RESPONSENEWUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=76,
-  serialized_end=111,
+  serialized_start=45,
+  serialized_end=80,
 )
 
 
@@ -142,8 +128,8 @@ _MSGTOUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=113,
-  serialized_end=178,
+  serialized_start=82,
+  serialized_end=147,
 )
 
 
@@ -173,8 +159,8 @@ _RESPONSECREATIONMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=180,
-  serialized_end=219,
+  serialized_start=149,
+  serialized_end=188,
 )
 
 
@@ -204,8 +190,8 @@ _REQUESTLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=221,
-  serialized_end=251,
+  serialized_start=190,
+  serialized_end=220,
 )
 
 
@@ -235,8 +221,8 @@ _RESPONSELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=253,
-  serialized_end=285,
+  serialized_start=222,
+  serialized_end=254,
 )
 
 
@@ -266,8 +252,8 @@ _REQUESTALLMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=287,
-  serialized_end=321,
+  serialized_start=256,
+  serialized_end=290,
 )
 
 
@@ -292,6 +278,13 @@ _RESPONSEALLMSG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='timestamp', full_name='responseAllMsg.timestamp', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -304,8 +297,8 @@ _RESPONSEALLMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=323,
-  serialized_end=374,
+  serialized_start=292,
+  serialized_end=362,
 )
 
 
@@ -335,8 +328,8 @@ _REQUESTUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=376,
-  serialized_end=408,
+  serialized_start=364,
+  serialized_end=396,
 )
 
 
@@ -373,8 +366,8 @@ _WAITINGMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=410,
-  serialized_end=459,
+  serialized_start=398,
+  serialized_end=447,
 )
 
 
@@ -404,8 +397,8 @@ _REQUESTMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=461,
-  serialized_end=492,
+  serialized_start=449,
+  serialized_end=480,
 )
 
 
@@ -430,6 +423,13 @@ _RESPONSEMSG = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='timestamp', full_name='responseMsg.timestamp', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -442,8 +442,8 @@ _RESPONSEMSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=494,
-  serialized_end=540,
+  serialized_start=482,
+  serialized_end=547,
 )
 
 DESCRIPTOR.message_types_by_name['newUser'] = _NEWUSER
@@ -553,8 +553,8 @@ _MENSAJERIA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=543,
-  serialized_end=837,
+  serialized_start=550,
+  serialized_end=844,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateUser',

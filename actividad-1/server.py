@@ -37,8 +37,9 @@ id_user = dict()
 id_msg = dict()
 port = 0
 user_name = ""
-global cant_clientes = 0
-global cant_mensajes = 0
+
+cant_clientes = 0
+cant_mensajes = 0
 # tendra como llave el usuario emisor, donde el value seraun diccionario con el
 # receptor como llave y value el mensaje
 reverseAllMsgs = dict()
@@ -92,6 +93,7 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
             names.append(user_name)
             allMsgs[user_name] = list()
             reverseAllMsgs[user_name] = list()
+            global cant_clientes
             cant_clientes += 1
             id_user[cant_clientes] = user_name
             logging.info("Nuevo usuario: nombre, " + user_name + ", ID: " + str(cant_clientes))
@@ -101,11 +103,16 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
 
     # envia mensaje entre usuarios
     def MsgToUser(self, request, context):
+        global cant_mensajes
         cant_mensajes += 1
-        id_msg[cant_mensajes] = request.message
-        logging.info("[" + request.user_name + "] a [" + request.receptor + "], mensaje:" + request.message + ", ID: " + str(cant_mensajes))
-        allMsgs[request.receptor].append(dict({request.user_name : request.message}))
-        reverseAllMsgs[request.user_name].append(dict({request.receptor : request.message}))
+        
+        ahora = dt.datetime.now()
+        id_msg[cant_mensajes] = [request.message, dt.datetime.timestamp(ahora)]
+        
+        logging.info(str(ahora) + "[" + request.user_name + "] a [" + request.receptor + "], mensaje:" + request.message + ", ID: " + str(cant_mensajes))
+        allMsgs[request.receptor].append(dict({request.user_name : cant_mensajes}))
+        reverseAllMsgs[request.user_name].append(dict({request.receptor : cant_mensajes}))
+        
         return mensajeria_pb2.responseCreationMsg(response="ok")
 
     # envia lista de todos los usuarios
@@ -120,13 +127,16 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
     # manda mensajes que se le han enviado
     def ViewMsg(self, request, context):
         diccionarios = allMsgs[request.user_name]
+        
         for msg in diccionarios:
             emisor = list(msg.keys())[0]
-            message = list(msg.values())[0]
+            message = id_msg[list(msg.values())[0]][0]
+            timestamp = id_msg[list(msg.values())[0]][1]
 
             yield mensajeria_pb2.responseMsg(
                 emisor=emisor,
-                message=message
+                message=message,
+                timestamp=timestamp
                 )
 
     # envia todos los mensajes que ha enviado el usuario que la pide
@@ -138,10 +148,12 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
             
             for msg in msgs:
                 receptor = list(msg.keys())[0]
-                message = list(msg.values())[0]
+                id_message = list(msg.values())[0]
+
                 yield mensajeria_pb2.responseAllMsg(
                     receptor=receptor,
-                    message=message
+                    message=id_msg[id_message][0],
+                    timestamp=id_msg[id_message][1]
                     )
         else:
             return mensajeria_pb2.responseAllMsg(
@@ -182,7 +194,7 @@ def run_server(port):
         server.stop(0)
 
 def main():
-    
+    cant_clientes = 0
     with run_server(DEFAULT_PORT) as (server, port):
         server.wait_for_termination()
 

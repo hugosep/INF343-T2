@@ -35,6 +35,7 @@ message requestAllMsg {
 message responseAllMsg {
     string receptor = 1;
     string message = 2;
+    float timestamp = 3;
 }
 
 message requestUser {
@@ -53,6 +54,7 @@ message requestMsg {
 message responseMsg {
     string emisor = 1;
     string message = 2;
+    float timestamp = 3;
 }
 
 service Mensajeria {

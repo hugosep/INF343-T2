@@ -65,8 +65,8 @@ class MensajeriaServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def ObtainList(self, request, context):
-    """rpc ChangeReceptor(ToUser) returns (ToUserResponse) {}
-    """
+    # missing associated documentation comment in .proto file
+    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')

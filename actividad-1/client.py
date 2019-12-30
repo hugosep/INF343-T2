@@ -7,14 +7,17 @@ import contextlib
 import grpc
 import mensajeria_pb2
 import mensajeria_pb2_grpc
+import datetime as dt
 # import _credentials
 import threading
 DEFAULT_IP_SERVER = "172.20.0.10"
 DEFAULT_PORT = 5000
+
 _SERVER_ADDR_TEMPLATE = '172.20.0.10:%d'
 _SIGNATURE_HEADER_KEY = 'x-signature'
+
+global user_name
 user_name = ""
-historial = list()
 
 class AuthGateway(grpc.AuthMetadataPlugin):
 
@@ -108,12 +111,13 @@ def send_rpc(channel):
                     if message == "q":
                         break
 
-                    responseCreationMsg = stub.MsgToUser(mensajeria_pb2.msgToUser(
+                    call_future = stub.MsgToUser(mensajeria_pb2.msgToUser(
                         user_name=user_name,
                         receptor=receptor,
                         message=message
                         ))
-
+                    responseCreationMsg = call_future.result()
+                    
                     if responseCreationMsg.response != "ok":
                         print("Problema al enviar mensaje al servidor.")
 
@@ -126,12 +130,12 @@ def send_rpc(channel):
                 print("")
 
             elif entrada == 3:
-                user = mensajeria_pb2.requestAllMsg(user_name=user_name)
-
+                call_future = mensajeria_pb2.requestAllMsg.future(user_name=user_name)
+                user = call_future.result()
                 print("-- Mensajes --")
                 for responseAllMsg in stub.ObtainAllMsg(user):
                     if responseAllMsg.receptor != "-1":
-                        print("[" + responseAllMsg.receptor + "]: " + responseAllMsg.message)
+                        print(str(dt.datetime.fromtimestamp(responseAllMsg.timestamp)) + " [" + responseAllMsg.receptor + "]: " + responseAllMsg.message)
                     else:
                         print("No hay mas mensajes")
                         break
@@ -142,7 +146,7 @@ def send_rpc(channel):
                 request = mensajeria_pb2.requestMsg(user_name=user_name)
 
                 for response in stub.ViewMsg(request):
-                    print("[" + response.emisor + "] : " + response.message)
+                    print(str(dt.datetime.fromtimestamp(response.timestamp)) + " [" + response.emisor + "] : " + response.message)
                 print("")
 
             elif entrada == 5:
