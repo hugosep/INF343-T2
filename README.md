@@ -33,11 +33,11 @@ Para cerrar servidor: presionar CTRL + C
 ### Comando para crear python a partir de .proto
 ``python3 -m grpc_tools.protoc --proto_path=. --python_out=. --grpc_python_out=. mensajeria.proto``
 
-## Tutorial
+### Tutorial
 
-### Uso general
+#### Uso general
 
-### Registrar nuevos clientes
+#### Registrar nuevos clientes
 
 ## Actividad 2
 
@@ -46,7 +46,7 @@ Para ejecutar la Actividad 2, se debe crear una imagen extendida del container `
 docker build -t container_pika .
 ```
 
-### Ejecuación
+### Ejecución
 
 Para ejecutar la aplicacion, se debe utilziar el comando:
 ```{r, engine='bash', count_lines}
