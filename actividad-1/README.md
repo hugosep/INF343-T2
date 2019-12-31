@@ -8,12 +8,12 @@
 
 ### Ejecución
 Para iniciar los servicios en los containers se deben ocupar:
-**$** ``sudo docker-compose build``
-**$** ``sudo docker-compose up server``
+* **$** ``sudo docker-compose build``
+* **$** ``sudo docker-compose up server``
 
 Se necesita levantar manualmente a los clientes:
-**$** ``sudo docker-compose run client1``
-**$** ``sudo docker-compose run client2``
+* **$** ``sudo docker-compose run client1``
+* **$** ``sudo docker-compose run client2``
 
 ### Consideraciones
 * IP del servidor es ``172.20.0.10``.
@@ -26,11 +26,11 @@ Se necesita levantar manualmente a los clientes:
 ### Salida
 Para salir solo basta con presionar CTRL + C. Para mayor seguridad usar el siguiente comando, una vez presionado CTRL + C:
 
-**$** ``sudo docker-compose down``
+* **$** ``sudo docker-compose down``
 
 Para cerrar servidor: presionar CTRL + C
 
-### Comando para crear pyhon a partir de .proto
+### Comando para crear python a partir de .proto
 ``python3 -m grpc_tools.protoc --proto_path=. --python_out=. --grpc_python_out=. mensajeria.proto``
 
 ## Tutorial
