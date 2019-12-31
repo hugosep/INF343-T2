@@ -19,10 +19,10 @@ _SIGNATURE_HEADER_KEY = 'x-signature'
 global user_name
 user_name = ""
 
-class AuthGateway(grpc.AuthMetadataPlugin):
+"""class AuthGateway(grpc.AuthMetadataPlugin):
 
     def __call__(self, context, callback):
-        """Implements authentication by passing metadata to a callback.
+        Implements authentication by passing metadata to a callback.
 
         Implementations of this method must not block.
 
@@ -31,13 +31,13 @@ class AuthGateway(grpc.AuthMetadataPlugin):
             the plugin is being called to authenticate.
           callback: An AuthMetadataPluginCallback to be invoked either
             synchronously or asynchronously.
-        """
+        
         # Example AuthMetadataContext object:
         # AuthMetadataContext(
         #     service_url=u'https://localhost:50051/helloworld.Greeter',
         #     method_name=u'SayHello')
         signature = context.method_name[::-1]
-        callback(((_SIGNATURE_HEADER_KEY, signature),), None)
+        callback(((_SIGNATURE_HEADER_KEY, signature),), None)"""
 
 
 """@contextlib.contextmanager
