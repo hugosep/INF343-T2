@@ -31,7 +31,7 @@ Para salir solo basta con presionar CTRL + C. Para mayor seguridad usar el sigui
 Para cerrar servidor: presionar CTRL + C
 
 ### Comando para crear pyhon a partir de .proto
-``python3 -m grpc_tools.protoc --proto_path=. --python_out=. --grpc_python_out=. mensajeria.proto`
+``python3 -m grpc_tools.protoc --proto_path=. --python_out=. --grpc_python_out=. mensajeria.proto``
 
 ## Tutorial
 
