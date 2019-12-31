@@ -99,7 +99,10 @@ class Mensajeria(mensajeria_pb2_grpc.MensajeriaServicer):
     def MsgToUser(self, request, context):
         global cant_mensajes
         cant_mensajes += 1
-        
+
+        if not request.receptor in id_user.values():
+            return mensajeria_pb2.responseCreationMsg(response="problem")
+
         ahora = dt.datetime.now()
         id_msg[cant_mensajes] = [request.message, dt.datetime.timestamp(ahora)]
         

@@ -111,15 +111,16 @@ def send_rpc(channel):
                     if message == "q":
                         break
 
-                    call_future = stub.MsgToUser(mensajeria_pb2.msgToUser(
+                    call_future = stub.MsgToUser.future(mensajeria_pb2.msgToUser(
                         user_name=user_name,
                         receptor=receptor,
                         message=message
                         ))
                     responseCreationMsg = call_future.result()
                     
-                    if responseCreationMsg.response != "ok":
-                        print("Problema al enviar mensaje al servidor.")
+                    if responseCreationMsg.response == "problem":
+                        print("Problema al enviar mensaje al servidor (usuario no existe).")
+                        receptor = input("Enviar mensaje a: ")
 
             elif entrada == 2:
                 request = mensajeria_pb2.requestList(request=user_name)
@@ -130,8 +131,8 @@ def send_rpc(channel):
                 print("")
 
             elif entrada == 3:
-                call_future = mensajeria_pb2.requestAllMsg.future(user_name=user_name)
-                user = call_future.result()
+                user = mensajeria_pb2.requestAllMsg(user_name=user_name)
+
                 print("-- Mensajes --")
                 for responseAllMsg in stub.ObtainAllMsg(user):
                     if responseAllMsg.receptor != "-1":
