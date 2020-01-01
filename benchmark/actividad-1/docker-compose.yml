@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+
+    server:
+        command: bash -c "python3 server/server.py"
+        image: hugosep/grpc-python:latest
+        volumes:
+            - ./:/server
+        container_name: server
+        ports:
+            - "5000:5000"
+        networks:
+            betweenContainers:
+                ipv4_address: 172.20.0.10
+
+    client:
+        command:  bash -c "python3 client/client.py"
+        image: hugosep/grpc-python:latest
+        container_name: client
+        volumes:
+            - ./:/client
+        depends_on: 
+            - server
+        networks:
+            - betweenContainers
+        stdin_open: true
+        tty: true
+
+networks:
+    betweenContainers:
+        ipam:
+            driver: default
+            config:
+            - subnet: 172.20.0.0/16
