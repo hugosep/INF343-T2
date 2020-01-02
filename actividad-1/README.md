@@ -34,4 +34,9 @@ Para cerrar servidor: presionar CTRL + C
 
 #### Uso general
 
+[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Uso General](https://img.youtube.com/vi/_bDEIjysBPY/0.jpg)](https://youtu.be/_bDEIjysBPY "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Uso General")
+
 #### Registrar nuevos clientes
+
+[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios](http://img.youtube.com/vi/k62UYTCz3ZI/0.jpg)](https://youtu.be/k62UYTCz3ZI "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios")
+
