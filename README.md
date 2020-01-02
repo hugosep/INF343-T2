@@ -44,6 +44,7 @@ Para cerrar servidor: presionar CTRL + C
 
 [![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios](http://img.youtube.com/vi/k62UYTCz3ZI/0.jpg)](https://youtu.be/k62UYTCz3ZI "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios")
 
+
 ## Actividad 2
 
 Para ejecutar la Actividad 2, se debe crear una imagen extendida del container ``python:3``. Para ello, se debe utilizar el ``Dockerfile`` adjunto, ejecutando el comando:
