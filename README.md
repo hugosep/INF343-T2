@@ -42,7 +42,7 @@ Para cerrar servidor: presionar CTRL + C
 
 #### Registrar nuevos clientes
 
-[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios](http://img.youtube.com/vi/gzUZSdAUPdwk62UYTCz3ZI/0.jpg)](https://youtu.be/k62UYTCz3ZI "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios")
+[![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios](http://img.youtube.com/vi/k62UYTCz3ZI/0.jpg)](https://youtu.be/k62UYTCz3ZI "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT1 - Registrar Nuevos Usuarios")
 
 ## Actividad 2
 
