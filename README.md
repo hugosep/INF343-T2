@@ -95,5 +95,4 @@ docker-compose down
 
 # Posible problema
 En el caso de tener un conflicto por la subred creada ``ERROR: Pool overlaps with other one on this address space
-``
-Ocupar comando: ``docker network prune``
+``, ocupar comando: ``docker network prune``
