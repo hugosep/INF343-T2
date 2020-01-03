@@ -92,3 +92,8 @@ docker-compose down
 
 #### Registrar Nuevos Clientes
 [![Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T2](https://img.youtube.com/vi/QsxBCTbZxcs/0.jpg)](https://youtu.be/QsxBCTbZxcs "Tarea 2 - Sistemas Distribuidos GRPC v/s RabbitMQ - ACT2 - T2")
+
+# Posible problema
+En el caso de tener un conflicto por la subred creada ``ERROR: Pool overlaps with other one on this address space
+``
+Ocupar comando: ``docker network prune``
